@@ -1,6 +1,8 @@
-/**
- * Telegram Web App utilities for Next.js
- */
+declare global {
+  interface Window {
+    Telegram?: { WebApp: any };
+  }
+}
 
 export interface TelegramWebAppUser {
   id: number;
