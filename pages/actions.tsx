@@ -1,49 +1,124 @@
 'use client';
-import CommandButton from '@/components/CommandButton';
+import Layout from '@/components/Layout';
+
+const ACTIONS = [
+  {
+    group: 'Telegram Commands',
+    items: [
+      { label: 'New Audit', cmd: '/audit name="Business Name" url=domain.com', icon: '🔍', desc: 'Full SEO + GBP audit with 4-week plan' },
+      { label: 'Check Status', cmd: '/status', icon: '⚡', desc: 'System snapshot — all services + stats' },
+      { label: 'Hot Leads', cmd: '/hotleads', icon: '🔥', desc: 'Show leads with high engagement' },
+      { label: 'Email Stats', cmd: '/emailstats', icon: '📧', desc: 'Campaign overview in Telegram' },
+      { label: 'Post to FB Now', cmd: '/fbpost', icon: '📱', desc: 'Trigger an immediate Facebook post' },
+      { label: 'GBP Audit', cmd: '/gbp businessname city', icon: '📍', desc: 'Google Business Profile check' },
+      { label: 'Citation Audit', cmd: '/cite domain.com', icon: '📋', desc: 'Check NAP consistency across directories' },
+      { label: 'Backlink Audit', cmd: '/links domain.com', icon: '🔗', desc: 'Check backlink profile' },
+      { label: 'Content Plan', cmd: '/plan businessname', icon: '📅', desc: 'Generate 4-week content strategy' },
+    ],
+  },
+  {
+    group: 'How to Onboard a Client',
+    items: [
+      { label: 'Start Onboard', cmd: '/onboard name="Business Name" url=domain.com', icon: '🚀', desc: 'Full audit + Zoho CRM deal + 4-week plan in one command' },
+    ],
+  },
+];
 
 export default function Actions() {
+  const copyCmd = (cmd: string) => {
+    navigator.clipboard.writeText(cmd).catch(() => {});
+  };
+
   return (
-    <div className="actions-page">
-      <h1>🚀 Quick Actions</h1>
-      <p className="subtitle">Trigger campaigns and actions from here</p>
-
-      <div className="section">
-        <h2>📧 Email Campaigns</h2>
-        <div className="actions-grid">
-          <CommandButton label="Send 15 Emails" icon="📧" action="send_emails" params={{ count: 15 }} />
-          <CommandButton label="Send 30 Emails" icon="📧📧" action="send_emails" params={{ count: 30 }} />
-          <CommandButton label="Follow-up (7 days)" icon="📮" action="follow_up" params={{ days: 7 }} />
-          <CommandButton label="Follow-up (14 days)" icon="📮📮" action="follow_up" params={{ days: 14 }} />
-        </div>
+    <Layout active="/actions">
+      <div className="page-header">
+        <h1>Actions</h1>
+        <p className="subtitle">Reference for all Telegram commands — tap to copy</p>
       </div>
 
-      <div className="section">
-        <h2>📱 Content Generation</h2>
-        <div className="actions-grid">
-          <CommandButton label="Generate Facebook Post" icon="📱" action="generate_carousel" />
-          <CommandButton label="Generate SEO Content" icon="✍️" action="generate_content" />
-          <CommandButton label="Generate Cold Call Script" icon="📞" action="generate_coldcall" />
+      {ACTIONS.map(group => (
+        <div key={group.group} className="group">
+          <div className="group-title">{group.group}</div>
+          <div className="cmd-grid">
+            {group.items.map(item => (
+              <button key={item.label} className="cmd-card" onClick={() => copyCmd(item.cmd)}>
+                <div className="cmd-top">
+                  <span className="cmd-icon">{item.icon}</span>
+                  <span className="cmd-label">{item.label}</span>
+                </div>
+                <code className="cmd-code">{item.cmd}</code>
+                <div className="cmd-desc">{item.desc}</div>
+                <div className="copy-hint">tap to copy</div>
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+      ))}
 
       <style jsx>{`
-        .actions-page { max-width: 900px; }
-        h1 { margin-bottom: 10px; color: #333; }
-        .subtitle { color: #999; margin-bottom: 30px; }
-        .section {
-          background: white;
-          padding: 25px;
-          border-radius: 8px;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-          margin-bottom: 25px;
+        .page-header { margin-bottom: 32px; }
+        h1 { font-size: 28px; font-weight: 700; color: #fff; margin: 0 0 4px 0; }
+        .subtitle { font-size: 13px; color: #6b7280; margin: 0; }
+        .group { margin-bottom: 32px; }
+        .group-title {
+          font-size: 11px;
+          font-weight: 600;
+          color: #6b7280;
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+          margin-bottom: 12px;
         }
-        .section h2 { margin: 0 0 20px 0; font-size: 18px; color: #555; }
-        .actions-grid {
+        .cmd-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-          gap: 20px;
+          grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+          gap: 12px;
+        }
+        .cmd-card {
+          background: #1a1a2e;
+          border: 1px solid #2d2d4e;
+          border-radius: 12px;
+          padding: 16px;
+          text-align: left;
+          cursor: pointer;
+          transition: all 0.15s;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          position: relative;
+        }
+        .cmd-card:hover {
+          border-color: #6c47ff;
+          background: #1e1040;
+        }
+        .cmd-card:hover .copy-hint { opacity: 1; }
+        .cmd-top {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+        .cmd-icon { font-size: 18px; }
+        .cmd-label { font-size: 14px; font-weight: 600; color: #fff; }
+        .cmd-code {
+          font-family: monospace;
+          font-size: 11px;
+          color: #8b5cf6;
+          background: #0f0f1a;
+          padding: 6px 8px;
+          border-radius: 6px;
+          word-break: break-all;
+          white-space: pre-wrap;
+        }
+        .cmd-desc { font-size: 12px; color: #6b7280; line-height: 1.4; }
+        .copy-hint {
+          position: absolute;
+          top: 12px;
+          right: 12px;
+          font-size: 10px;
+          color: #6c47ff;
+          opacity: 0;
+          transition: opacity 0.15s;
         }
       `}</style>
-    </div>
+    </Layout>
   );
 }
