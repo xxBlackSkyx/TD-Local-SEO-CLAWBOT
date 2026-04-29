@@ -2,14 +2,14 @@
 import { useEffect, useState } from 'react';
 import Layout from '@/components/Layout';
 
-const API = process.env.NEXT_PUBLIC_API_URL || 'http://16.59.210.149:8080';
+
 
 export default function Audits() {
   const [audits, setAudits] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${API}/api/audits`)
+    fetch(`/api/ec2/audits`)
       .then(r => r.json())
       .then(d => { setAudits(d); setLoading(false); })
       .catch(() => setLoading(false));

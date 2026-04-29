@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import Layout from '@/components/Layout';
 
-const API = process.env.NEXT_PUBLIC_API_URL || 'http://16.59.210.149:8080';
+
 
 export default function Leads() {
   const [leads, setLeads] = useState<any[]>([]);
@@ -10,7 +10,7 @@ export default function Leads() {
   const [filter, setFilter] = useState('');
 
   useEffect(() => {
-    fetch(`${API}/api/leads`)
+    fetch(`/api/ec2/leads`)
       .then(r => r.json())
       .then(d => { setLeads(d); setLoading(false); })
       .catch(() => setLoading(false));

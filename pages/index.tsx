@@ -4,7 +4,7 @@ import Layout from '@/components/Layout';
 import StatCard from '@/components/StatCard';
 import ServiceDot from '@/components/ServiceDot';
 
-const API = process.env.NEXT_PUBLIC_API_URL || 'http://16.59.210.149:8080';
+
 
 export default function Overview() {
   const [data, setData] = useState<any>(null);
@@ -13,7 +13,7 @@ export default function Overview() {
 
   const fetchData = useCallback(async () => {
     try {
-      const res = await fetch(`${API}/api/stats`);
+      const res = await fetch(`/api/ec2/stats`);
       const json = await res.json();
       setData(json);
       setLastUpdated(new Date().toLocaleTimeString());
@@ -130,7 +130,7 @@ export default function Overview() {
         </div>
         <div className="fb-status-card">
           <ServiceDot name="FB Autopilot" up={data?.services.fb_autopilot} large />
-          <p>Auto-posting 1-3x daily with Pexels photos. Day-themed content.</p>
+          <p>Auto-posting 1–3x daily. Text-only, day-themed content.</p>
         </div>
       </div>
 

@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import Layout from '@/components/Layout';
 
-const API = process.env.NEXT_PUBLIC_API_URL || 'http://16.59.210.149:8080';
+
 
 const DAY_THEMES: Record<number, { label: string; desc: string; color: string }> = {
   0: { label: 'Sunday', desc: 'Educational — teach local SEO concepts', color: '#6c47ff' },
@@ -18,7 +18,7 @@ export default function Facebook() {
   const [data, setData] = useState<any>(null);
 
   useEffect(() => {
-    fetch(`${API}/api/stats`)
+    fetch(`/api/ec2/stats`)
       .then(r => r.json())
       .then(setData)
       .catch(() => {});
@@ -30,7 +30,7 @@ export default function Facebook() {
   return (
     <Layout active="/facebook">
       <div className="page-header">
-        <h1>Facebook Autopilot</h1>
+        <h1>Facebook Textpilot</h1>
         <span className={`status-pill ${data?.services?.fb_autopilot ? 'green' : 'red'}`}>
           {data?.services?.fb_autopilot ? '● Running' : '● Down'}
         </span>
@@ -46,7 +46,7 @@ export default function Facebook() {
           <div className="stat-label">Daily Schedule</div>
         </div>
         <div className="stat-block blue">
-          <div className="stat-number">Auto</div>
+          <div className="stat-number">Text</div>
           <div className="stat-label">Pexels Photos</div>
         </div>
       </div>
@@ -85,7 +85,7 @@ export default function Facebook() {
           </div>
           <div className="config-row">
             <span className="config-key">Post Type</span>
-            <span className="config-val">Text + Pexels Photo</span>
+            <span className="config-val">Text only</span>
           </div>
           <div className="config-row">
             <span className="config-key">Frequency</span>
